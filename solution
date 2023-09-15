@@ -1,0 +1,29 @@
+# I simply set the input an as a matrix
+## and then set the solved value "slv" as a null
+## then I changed every reference to "mean" to "solve"
+CacheMatrix <- function(an= matrix(sample(1:100,9),3,3)) {
+  slv <- NULL
+  set <- function(y) {
+    an <<- y
+    slv<<- NULL
+  }
+  get <- function() an
+  setsolve <- function(solve) slv <<- solve
+  getsolve <- function() slv
+  list(set = set, get = get,
+       setsolve = setsolve,
+       getsolve = getsolve)
+}
+
+## Same here, changed "mean" to "solve" and "m" to "sol"
+Solve <- function(an, ...) {
+  slv <- an$getsolve()
+  if(!is.null(slv)) {
+    message("getting inversed matrix")
+    return(slv)
+  }
+  data <- an$get()
+  slv <- solve(data, ...)
+  an$setsolve(slv)
+  slv
+}
